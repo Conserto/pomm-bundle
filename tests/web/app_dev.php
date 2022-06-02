@@ -18,7 +18,7 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
 
 require_once __DIR__ . '/../app/autoload.php';
 
-if (class_exists('\Symfony\Component\ErrorHandler\Debug')) {
+if (class_exists(\Symfony\Component\ErrorHandler\Debug::class)) {
     \Symfony\Component\ErrorHandler\Debug::enable();
 }else{
     \Symfony\Component\Debug\Debug::enable();

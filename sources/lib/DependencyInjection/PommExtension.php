@@ -34,11 +34,10 @@ class PommExtension extends Extension
      *
      * @see Extension
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/pomm.yml');
-
         $loader->load('services/profiler.yml');
 
         $configuration = new Configuration();
@@ -53,21 +52,21 @@ class PommExtension extends Extension
      * Configure the DIC using configuration file.
      *
      * @access public
-     * @param  array            $config
-     * @param  ContainerBuilder $container
-     * @return null
+     * @param array $config
+     * @param ContainerBuilder $container
+     * @return void
      */
-    public function configure(array $config, ContainerBuilder $container)
+    public function configure(array $config, ContainerBuilder $container): void
     {
         $definition = $container->getDefinition('pomm');
 
-        $container->setAlias('PommProject\Foundation\Pomm', new Alias('pomm', false));
+        $container->setAlias(\PommProject\Foundation\Pomm::class, new Alias('pomm', false));
         $container->setParameter('pomm.configuration', $config['configuration']);
 
         if (isset($config['logger']['service'])) {
             $service = $config['logger']['service'];
 
-            if (is_string($service) && strpos($service, '@') === 0) {
+            if (is_string($service) && str_starts_with($service, '@')) {
                 $definition
                     ->addMethodCall('setLogger', [new Reference(substr($service, 1))]);
             }

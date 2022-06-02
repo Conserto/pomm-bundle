@@ -1,64 +1,69 @@
+ping:
+    path: /ping
+    controller: AppBundle\Controller\IndexController::pingAction
+    methods: [GET]
+
 index:
     path: /
-    defaults: { _controller: index_controller:indexAction }
+    controller: AppBundle\Controller\IndexController::indexAction
     methods: [GET]
 
 get_default:
     path: /get
-    defaults: { _controller: index_controller:getAction }
+    controller: AppBundle\Controller\IndexController::getAction
     methods: [GET]
 
 get:
     path: /get/{name}
-    defaults: { _controller: index_controller:getAction }
+    controller: AppBundle\Controller\IndexController::getAction
     methods: [GET]
 
 get_session_default:
     path: /get_session_default/{name}
-    defaults: { _controller: index_controller:getSession2Action }
+    controller: AppBundle\Controller\IndexController::getSession2Action
     methods: [GET]
 
 get_session:
     path: /get_session_1/{name}
-    defaults: { _controller: index_controller:getSession2Action }
+    controller: AppBundle\Controller\IndexController::getSession2Action
     methods: [GET]
 
 get_session_2:
     path: /get_session_2/{name}
-    defaults: { _controller: index_controller:getSession2Action }
+    controller: AppBundle\Controller\IndexController::getSession2Action
     methods: [GET]
 
 serialize:
     path: /serialize
-    defaults: { _controller: index_controller:serializeAction }
+    controller: AppBundle\Controller\IndexController::serializeAction
     methods: [GET]
 
 deserialize:
     path: /deserialize
-    defaults: { _controller: index_controller:deserializeAction }
+    controller: AppBundle\Controller\IndexController::deserializeAction
     methods: [GET]
 
 property_list:
     path: /property
-    defaults: { _controller: index_controller:propertyListAction }
+    controller: AppBundle\Controller\IndexController::propertyListAction
     methods: [GET]
 
 property_type:
     path: /property/{property}
-    defaults: { _controller: index_controller:propertyTypeAction }
+    controller: AppBundle\Controller\IndexController::propertyTypeAction
     methods: [GET]
 
 serviceModel:
     path: /serviceModel
-    defaults: { _controller: index_controller:serviceModelAction }
+    controller: AppBundle\Controller\IndexController::serviceModelAction
     methods: [GET]
 
 serviceContainer:
     path: /serviceContainer
-    defaults: { _controller: index_controller:serviceContainerAction }
+    controller: AppBundle\Controller\IndexController::serviceContainerAction
     methods: [GET]
 
 get_autowire:
     path: /get_autowire/{name}
-    defaults: { _controller: autowire_controller:getAutowireAction }
+    controller: AppBundle\Controller\AutowireController::getAutowireAction
     methods: [GET]

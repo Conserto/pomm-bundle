@@ -9,6 +9,11 @@
  */
 namespace PommProject\PommBundle\Twig\Extension;
 
+use Twig\Error\LoaderError;
+use Twig\Extension\AbstractExtension;
+use Twig\Loader\FilesystemLoader;
+use Twig\TwigFilter;
+
 /**
  * ProfilerExtension
  *
@@ -20,7 +25,7 @@ namespace PommProject\PommBundle\Twig\Extension;
  * @license X11 {@link http://opensource.org/licenses/mit-license.php}
  * @see \Twig_Extension
  */
-class ProfilerExtension extends \Twig_Extension
+class ProfilerExtension extends AbstractExtension
 {
     /**
      * __construct
@@ -28,9 +33,10 @@ class ProfilerExtension extends \Twig_Extension
      * Extension constructor.
      *
      * @access public
-     * @param  \Twig_Loader_Filesystem $loader
+     * @param FilesystemLoader $loader
+     * @throws LoaderError
      */
-    public function __construct(\Twig_Loader_Filesystem $loader)
+    public function __construct(FilesystemLoader $loader)
     {
         $loader->addPath($this->getTemplateDirectory(), 'Pomm');
     }
@@ -43,34 +49,22 @@ class ProfilerExtension extends \Twig_Extension
      * @access private
      * @return string
      */
-    private function getTemplateDirectory()
+    private function getTemplateDirectory(): string
     {
-        $r = new \ReflectionClass('PommProject\\SymfonyBridge\\DatabaseDataCollector');
+        $r = new \ReflectionClass(\PommProject\SymfonyBridge\DatabaseDataCollector::class);
 
-        return dirname(dirname(dirname($r->getFileName()))).'/views';
+        return dirname($r->getFileName(), 3).'/views';
     }
 
     /**
      * getFilters
      *
-     * @see \Twig_Extension
+     * @see AbstractExtension
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('sql_format', function ($sql) {
-                return \SqlFormatter::format($sql);
-            }),
+            new TwigFilter('sql_format', fn ($sql) =>\SqlFormatter::format($sql)),
         ];
-    }
-
-    /**
-     * getName
-     *
-     * @see \Twig_Extension
-     */
-    public function getName()
-    {
-        return 'pomm';
     }
 }

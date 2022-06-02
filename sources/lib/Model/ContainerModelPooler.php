@@ -9,6 +9,7 @@
  */
 namespace PommProject\PommBundle\Model;
 
+use PommProject\ModelManager\Model\Model;
 use PommProject\ModelManager\Model\ModelPooler;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -28,12 +29,12 @@ class ContainerModelPooler extends ModelPooler implements ContainerAwareInterfac
 {
     use ContainerAwareTrait;
 
-    private $serviceMap = [];
+    private array $serviceMap = [];
 
     /**
      * {@inheritdoc}
      */
-    public function addModelToServiceMapping($class, $serviceId)
+    public function addModelToServiceMapping(string $class, string $serviceId): void
     {
         $this->serviceMap[$class] = $serviceId;
     }
@@ -41,12 +42,12 @@ class ContainerModelPooler extends ModelPooler implements ContainerAwareInterfac
     /**
      * {@inheritdoc}
      */
-    protected function createClient($class)
+    protected function createClient(object|string $identifier): Model
     {
-        if (array_key_exists($class, $this->serviceMap)) {
-            return $this->container->get($this->serviceMap[$class]);
+        if (array_key_exists($identifier, $this->serviceMap)) {
+            return $this->container->get($this->serviceMap[$identifier]);
         }
 
-        return parent::createClient($class);
+        return parent::createClient($identifier);
     }
 }

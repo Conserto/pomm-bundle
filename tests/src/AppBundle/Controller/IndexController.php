@@ -8,36 +8,29 @@ use \PommProject\Foundation\Session\Session;
 use \Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use \Symfony\Component\Serializer\Serializer;
 use \Symfony\Component\HttpFoundation\Response;
-use \Symfony\Component\Templating\EngineInterface;
 use \Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface;
+use Twig\Environment;
 
 class IndexController
 {
-    private $pomm;
-    private $templating;
-    private $serializer;
-    private $property;
-    private $serviceModel;
-
     public function __construct(
-        $templating,
-        Session $pomm,
-        Serializer $serializer,
-        PropertyInfoExtractorInterface $property,
-        Session $serviceSession,
-        ServiceModel $serviceModel
+        private Environment $templating,
+        private readonly Session $pomm,
+        private readonly Serializer $serializer,
+        private readonly PropertyInfoExtractorInterface $property,
+        private readonly Session $serviceSession,
+        private readonly ServiceModel $serviceModel
     ) {
-        $this->pomm = $pomm;
-        $this->templating = $templating;
-        $this->serializer = $serializer;
-        $this->property = $property;
-        $this->serviceSession = $serviceSession;
-        $this->serviceModel = $serviceModel;
     }
 
-    public function indexAction()
+    public function pingAction(): Response
     {
-        $result = $this->pomm->getQueryManager()
+        return new Response("PING");
+    }
+
+    public function indexAction(): Response
+    {
+        $this->pomm->getQueryManager()
             ->query('select 1');
 
         return new Response(
@@ -47,7 +40,7 @@ class IndexController
         );
     }
 
-    public function getAction(Config $config = null)
+    public function getAction(Config $config = null): Response
     {
         return new Response(
             $this->templating->render(
@@ -62,7 +55,7 @@ class IndexController
      *
      * @ParamConverter("config", options={"model": "\AppBundle\Model\MyDb1\PublicSchema\ConfigModel"})
      */
-    public function getDefaultSessionAction(Config $config)
+    public function getDefaultSessionAction(Config $config): Response
     {
         return new Response(
             $this->templating->render(
@@ -77,7 +70,7 @@ class IndexController
      *
      * @ParamConverter("config", options={"session": "my_db", "model": "\AppBundle\Model\MyDb1\PublicSchema\ConfigModel"})
      */
-    public function getSessionAction(Config $config)
+    public function getSessionAction(Config $config): Response
     {
         return new Response(
             $this->templating->render(
@@ -92,7 +85,7 @@ class IndexController
      *
      * @ParamConverter("config", options={"session": "my_db2", "model": "\AppBundle\Model\MyDb1\PublicSchema\ConfigModel"})
      */
-    public function getSession2Action(Config $config)
+    public function getSession2Action(Config $config): Response
     {
         return new Response(
             $this->templating->render(
@@ -102,13 +95,13 @@ class IndexController
         );
     }
 
-    public function failAction()
+    public function failAction(): void
     {
         $this->pomm->getQueryManager()
             ->query('select 1 from');
     }
 
-    public function serializeAction()
+    public function serializeAction(): Response
     {
         $results = $this->pomm->getQueryManager()
             ->query('select point(1,2)');
@@ -120,7 +113,7 @@ class IndexController
         );
     }
 
-    public function deserializeAction()
+    public function deserializeAction(): Response
     {
         $json = <<<EOF
 {
@@ -137,7 +130,7 @@ EOF;
         );
     }
 
-    public function propertyListAction()
+    public function propertyListAction(): Response
     {
         $info = $this->property->getProperties('AppBundle\Model\MyDb1\PublicSchema\Config');
 
@@ -149,7 +142,7 @@ EOF;
         );
     }
 
-    public function propertyTypeAction($property)
+    public function propertyTypeAction(string $property): Response
     {
         $info = $this->property->getTypes('AppBundle\Model\MyDb1\PublicSchema\Config', $property);
 
@@ -161,14 +154,14 @@ EOF;
         );
     }
 
-    public function serviceModelAction()
+    public function serviceModelAction(): Response
     {
         $model = $this->serviceSession->getModel('AppBundle\Model\MyDb1\PublicSchema\ServiceModel');
 
         return new Response('Created model as service. Sum:' . $model->getSum());
     }
 
-    public function serviceContainerAction()
+    public function serviceContainerAction(): Response
     {
         return new Response('Model from container as service. Sum:' . $this->serviceModel->getSum());
     }

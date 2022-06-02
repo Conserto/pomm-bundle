@@ -10,7 +10,6 @@
 namespace PommProject\PommBundle\Model;
 
 use PommProject\Foundation\Pomm;
-use PommProject\Foundation\Session\Session;
 
 /**
  * Configurator
@@ -24,19 +23,11 @@ use PommProject\Foundation\Session\Session;
  */
 class ChainConfigurator
 {
-    private $configurators;
-
-    public function __construct(array $configurators)
+    public function __construct(private readonly array $configurators)
     {
-        $this->configurators = $configurators;
     }
 
-    /**
-     * @param Pomm $pomm
-     *
-     * @return null
-     */
-    public function configure(Pomm $pomm)
+    public function configure(Pomm $pomm): void
     {
 
         foreach ($this->configurators as $configurator) {

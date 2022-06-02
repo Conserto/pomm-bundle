@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace PommProject\PommBundle\Model;
 
 use PommProject\Foundation\Pomm;
@@ -24,19 +25,11 @@ use PommProject\Foundation\Session\Session;
  */
 class Configurator
 {
-    private $poolers;
-
-    public function __construct(array $poolers)
+    public function __construct(private readonly array $poolers)
     {
-        $this->poolers = $poolers;
     }
 
-    /**
-     * @param Pomm $pomm
-     *
-     * @return null
-     */
-    public function configure(Pomm $pomm)
+    public function configure(Pomm $pomm): void
     {
         foreach ($pomm->getSessionBuilders() as $name => $builder) {
             $pomm->addPostConfiguration($name, function (Session $session) {

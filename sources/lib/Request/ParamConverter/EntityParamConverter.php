@@ -3,6 +3,7 @@
 namespace PommProject\PommBundle\Request\ParamConverter;
 
 use PommProject\Foundation\Pomm;
+use PommProject\ModelManager\Model\FlexibleEntity\FlexibleEntityInterface;
 use PommProject\ModelManager\Model\Model;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -10,11 +11,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInte
 
 class EntityParamConverter implements ParamConverterInterface
 {
-    private $pomm;
-
-    public function __construct(Pomm $pomm)
+    public function __construct(private readonly Pomm $pomm)
     {
-        $this->pomm = $pomm;
     }
 
     public function supports(ParamConverter $configuration)
@@ -25,9 +23,7 @@ class EntityParamConverter implements ParamConverterInterface
 
         $reflection = new \ReflectionClass($configuration->getClass());
 
-        return $reflection->implementsInterface(
-            "PommProject\\ModelManager\\Model\\FlexibleEntity\\FlexibleEntityInterface"
-        );
+        return $reflection->implementsInterface(FlexibleEntityInterface::class);
     }
 
     public function apply(Request $request, ParamConverter $configuration)

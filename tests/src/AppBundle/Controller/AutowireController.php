@@ -15,10 +15,10 @@ use Twig\Environment;
 class AutowireController
 {
     public function getAutowireAction(
-        $name,
+        string $name,
         Pomm $pomm,
         Environment $engine
-    )
+    ): Response
     {
         $config = $pomm
             ->getDefaultSession()

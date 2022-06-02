@@ -33,3 +33,6 @@
 # Composer
 /composer.phar
 /composer.lock
+
+# IDE - PhpStorm
+.idea

@@ -10,6 +10,8 @@
 namespace PommProject\PommBundle\Model;
 
 use PommProject\Foundation\Client\ClientPooler;
+use PommProject\ModelManager\Model\Model;
+use PommProject\ModelManager\ModelLayer\ModelLayer;
 use PommProject\ModelManager\ModelLayer\ModelLayerPooler;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -29,12 +31,12 @@ class ContainerModelLayerPooler extends ModelLayerPooler implements ContainerAwa
 {
     use ContainerAwareTrait;
 
-    private $serviceMap = [];
+    private array $serviceMap = [];
 
     /**
      * {@inheritdoc}
      */
-    public function addModelToServiceMapping($class, $serviceId)
+    public function addModelToServiceMapping(string $class, string $serviceId): void
     {
         $this->serviceMap[$class] = $serviceId;
     }
@@ -42,12 +44,12 @@ class ContainerModelLayerPooler extends ModelLayerPooler implements ContainerAwa
     /**
      * {@inheritdoc}
      */
-    protected function createClient($class)
+    protected function createClient(object|string $identifier): ModelLayer
     {
-        if (array_key_exists($class, $this->serviceMap)) {
-            return $this->container->get($this->serviceMap[$class]);
+        if (array_key_exists($identifier, $this->serviceMap)) {
+            return $this->container->get($this->serviceMap[$identifier]);
         }
 
-        return parent::createClient($class);
+        return parent::createClient($identifier);
     }
 }

@@ -32,6 +32,6 @@ class Service extends RowStructure
     {
         $this
             ->setRelation('public.service')
-            ;
+        ;
     }
 }

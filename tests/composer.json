@@ -1,20 +1,21 @@
 {
     "require": {
-        "symfony/symfony": "^3.4|^4.3|^5.0",
+        "symfony/symfony": "~6.0",
         "symfony/monolog-bundle": "~3.0",
-        "twig/extensions": "~1.0",
-        "sensio/framework-extra-bundle": "^3.4|^4.3|^5.0",
-        "pomm-project/cli": "~2.0",
-        "pomm-project/foundation": "~2.0",
-        "pomm-project/model-manager": "~2.0",
-        "pomm-project/pomm-symfony-bridge": "~2.5|dev-master",
-        "symfony/framework-bundle": "^3.4|^4.3|^5.0",
-        "jdorn/sql-formatter": "~1.2"
+        "sensio/framework-extra-bundle": "~6.0",
+        "conserto/pomm-foundation":  "dev-main",
+        "conserto/pomm-model-manager":  "dev-upgrade_php_8_1",
+        "conserto/pomm-cli":  "dev-upgrade_php_8_1",
+        "conserto/pomm-symfony-bridge":  "dev-upgrade_php_8_1",
+        "symfony/framework-bundle": "~6.0",
+        "jdorn/sql-formatter": "~1.2",
+        "symfony/contracts": "^2.5",
+        "behat/behat": "^3.10",
+        "friends-of-behat/mink-extension": "^2.6"
     },
     "require-dev": {
-        "behatch/contexts": "~3.0",
-        "behat/mink-selenium2-driver": "dev-master",
-        "instaclick/php-webdriver": "1.4.7"
+        "behat/mink-selenium2-driver": "1.6.0",
+        "instaclick/php-webdriver": "^1.4.7"
     },
     "autoload": {
         "psr-0": { "AppBundle\\": "src/" },

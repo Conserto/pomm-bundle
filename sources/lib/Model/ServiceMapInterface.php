@@ -28,5 +28,5 @@ interface ServiceMapInterface
      * @param string $class
      * @param string $serviceId
      */
-    public function addModelToServiceMapping($class, $serviceId);
+    public function addModelToServiceMapping(string $class, string $serviceId): void;
 }
