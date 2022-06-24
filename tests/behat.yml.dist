@@ -4,7 +4,6 @@ default:
             paths: [ "%paths.base%/tests/Features" ]
             contexts:
                 - FeatureContext
-                - behatch:context:json
     extensions:
         Behat\MinkExtension:
             base_url: 'http://localhost:8080'
@@ -21,4 +20,3 @@ default:
                                         - "--headless"
                                         - "--disable-gpu"
                                         - "--no-sandbox"
-        Behatch\Extension: ~

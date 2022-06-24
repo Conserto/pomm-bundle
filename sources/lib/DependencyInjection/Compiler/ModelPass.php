@@ -9,6 +9,7 @@
  */
 namespace PommProject\PommBundle\DependencyInjection\Compiler;
 
+use PommProject\PommBundle\Model\ServiceMapInterface;
 use Symfony\Component\DependencyInjection as DI;
 
 /**
@@ -21,11 +22,10 @@ class ModelPass implements DI\Compiler\CompilerPassInterface
     public function process(DI\ContainerBuilder $container)
     {
         $this->addTagged($container, 'pomm.model', 'pomm.pooler.model', 'getModel');
-
         $this->addTagged($container, 'pomm.model_layer', 'pomm.pooler.model_layer', 'getModelLayer');
     }
 
-    private function addTagged(DI\ContainerBuilder $container, $tag, $defaultServiceId, $method)
+    private function addTagged(DI\ContainerBuilder $container, string $tag, string $defaultServiceId, string $method): void
     {
         /** @var DI\Definition[] $definitions */
         $definitions = [];
@@ -38,14 +38,14 @@ class ModelPass implements DI\Compiler\CompilerPassInterface
                 ->getClass()
             ;
 
-            $serviceId = isset($tags[0]['pooler']) ? $tags[0]['pooler'] : $defaultServiceId;
-            $sessionId = isset($tags[0]['session']) ? $tags[0]['session'] : 'pomm.default_session';
+            $serviceId = $tags[0]['pooler'] ?? $defaultServiceId;
+            $sessionId = $tags[0]['session'] ?? 'pomm.default_session';
 
             if (!array_key_exists($serviceId, $definitions)) {
                 if ($container->hasDefinition($serviceId)) {
                     $definitions[$serviceId] = $container->getDefinition($serviceId);
 
-                    $interface = 'PommProject\PommBundle\Model\ServiceMapInterface';
+                    $interface = ServiceMapInterface::class;
                     if (!in_array($interface, class_implements($definitions[$serviceId]->getClass()), true)) {
                         throw new \RuntimeException(sprintf('Your pooler should implement %s.', $interface));
                     }
@@ -61,14 +61,10 @@ class ModelPass implements DI\Compiler\CompilerPassInterface
             $container->removeDefinition($id);
             $container->addDefinitions([$id . '.pomm.inner' => $old]);
 
-            $service = $container->register($id, $old->getClass())
+            $container->register($id, $old->getClass())
                 ->setFactory([new DI\Reference($sessionId), $method])
                 ->addArgument($old->getClass())
             ;
-
-            if (version_compare(\Symfony\Component\HttpKernel\Kernel::VERSION, '3.3', '<')) {
-                $service->addAutowiringType($old->getClass());
-            }
 
             if ($class !== $id) {
                 $container->setAlias($class, $id);

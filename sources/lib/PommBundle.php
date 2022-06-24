@@ -9,6 +9,7 @@
  */
 namespace PommProject\PommBundle;
 
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
@@ -43,10 +44,10 @@ class PommBundle extends Bundle
         $container->addCompilerPass(new DependencyInjection\Compiler\BuilderPass);
     }
 
-    private function checkPhpVersion()
+    private function checkPhpVersion(): void
     {
-        if (PHP_MAJOR_VERSION === 5) {
-            @trigger_error('The pomm bundle stop supporting PHP5 in version 3.0', E_USER_DEPRECATED);
+        if (version_compare(PHP_VERSION, '8.1.0') < 0) {
+            @trigger_error('The pomm bundle stop supporting PHP <= 8.0', E_USER_DEPRECATED);
         }
     }
 
@@ -55,7 +56,7 @@ class PommBundle extends Bundle
      *
      * @see Bundle
      */
-    public function getContainerExtension()
+    public function getContainerExtension(): ExtensionInterface
     {
         return new DependencyInjection\PommExtension();
     }

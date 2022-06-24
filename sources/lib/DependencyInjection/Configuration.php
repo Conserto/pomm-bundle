@@ -9,6 +9,7 @@
  */
 namespace PommProject\PommBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -33,8 +34,9 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('pomm');
-        $rootNode = method_exists($treeBuilder, 'getRootNode') ? $treeBuilder->getRootNode() : $treeBuilder->root('pomm');
+        $rootNode = $treeBuilder->getRootNode();
 
+        /** @phpstan-ignore-next-line */
         $rootNode
             ->children()
                 ->arrayNode('configuration')
@@ -57,9 +59,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('pomm:default')->end()
                         ->end()
                         ->validate()
-                            ->ifTrue(function ($v) {
-                                return isset($v['session_builder']) && isset($v['class:session_builder']);
-                            })
+                            ->ifTrue(fn($v) => isset($v['session_builder']) && isset($v['class:session_builder']))
                             ->thenInvalid('You cannot use both "session_builder" and "class:session_builder" at the same time.')
                         ->end()
                         ->beforeNormalization()

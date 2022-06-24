@@ -50,12 +50,12 @@ class FeatureContext extends MinkContext
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->getSession()->getCurrentUrl());
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($ch);
+        curl_exec($ch);
         $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        if ($code !== $responseCode) {
-            throw new \Exception('The HTTP response is not correct');
+        if ((int)$code !== $responseCode) {
+            throw new \Exception(sprintf('The HTTP response is not correct. Actual: %s. Expected: %s', $responseCode, $code));
         }
 
     }

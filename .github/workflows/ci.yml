@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, '4.0' ]
+  pull_request:
+    branches: [ master, '4.0' ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      selenium:
+        image: selenium/standalone-chrome:3.141.59-oxygen
+        env:
+          GIT_CLEAN_FLAGS: none
+          SELENIUM_HOST: "selenium-standalone-chrome"
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 12345
+          POSTGRES_HOST_AUTH_METHOD: trust
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: |
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee -a /etc/apt/sources.list.d/google-chrome.list
+          sudo apt-get update -qqy
+          sudo apt-get -qqy install google-chrome-stable
+          CHROME_VERSION=$(google-chrome-stable --version)
+          CHROME_FULL_VERSION=${CHROME_VERSION%%.*}
+          CHROME_MAJOR_VERSION=${CHROME_FULL_VERSION//[!0-9]}
+          sudo rm /etc/apt/sources.list.d/google-chrome.list
+          export CHROMEDRIVER_VERSION=`curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_MAJOR_VERSION%%.*}`
+          curl -L -O "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+          unzip chromedriver_linux64.zip && chmod +x chromedriver && sudo mv chromedriver /usr/local/bin
+          chromedriver -version
+          curl -L -O "https://github.com/SeleniumHQ/selenium/releases/download/selenium-4.2.0/selenium-server-4.2.2.jar"
+          sudo mv selenium-server-4.2.2.jar /usr/local/bin/selenium-server-standalone.jar
+          psql -c 'CREATE DATABASE pomm_test' -U postgres -h 127.0.0.1 postgres
+          psql -c 'CREATE EXTENSION hstore' -U postgres -h 127.0.0.1 pomm_test
+          psql -c 'CREATE EXTENSION ltree' -U postgres  -h 127.0.0.1 pomm_test
+          psql -c 'CREATE TABLE config (name character varying(25) PRIMARY KEY, value character varying(25))' -U postgres -h 127.0.0.1 pomm_test
+          psql -c "INSERT INTO config VALUES ('test', 'value')" -U postgres -h 127.0.0.1 pomm_test
+          psql -c 'CREATE DATABASE pomm_test_2' -U postgres -h 127.0.0.1 postgres
+          psql -c 'CREATE TABLE config (name character varying(25) PRIMARY KEY, value character varying(25))' -U postgres -h 127.0.0.1 pomm_test_2
+          psql -c "INSERT INTO config VALUES ('test', 'value_db2')" -U postgres -h 127.0.0.1 pomm_test_2
+          composer update -n --prefer-dist --prefer-stable
+          ln -fs ./parameters.yml.dist ./tests/app/config/parameters.yml
+          cd tests/
+          composer update -n --prefer-dist --prefer-stable
+          rm -rf vendor/conserto/pomm-bundle
+          ln -s ../../../ vendor/conserto/pomm-bundle
+          nohup php -S localhost:8080 -t web &> /dev/null &
+          nohup xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar /usr/local/bin/selenium-server-standalone.jar standalone --host 127.0.0.1 --port 4444 &> /dev/null &
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - name: PHPStan Static Analysis
+        uses: php-actions/phpstan@v2
+        with:
+          configuration: phpstan.neon
+          memory_limit: 256M
+
+      - name: PHPCS Analysis
+        run: |
+          ./vendor/bin/phpcs --standard=psr2 --runtime-set ignore_warnings_on_exit true --report=summary ./sources
+
+      - name: Run tests
+        run: |
+          cd tests/
+          ./app/console pomm:generate:schema-all -d 'src/'  -a 'AppBundle\Model' my_db1
+          ./bin/behat -vvv
