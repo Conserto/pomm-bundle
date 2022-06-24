@@ -18,9 +18,9 @@
   "require": {
     "php": ">=8.1",
     "jdorn/sql-formatter": "~1.2",
-    "conserto/pomm-model-manager":  "dev-upgrade_php_8_1",
-    "conserto/pomm-cli":  "dev-upgrade_php_8_1",
-    "conserto/pomm-symfony-bridge":  "dev-upgrade_php_8_1",
+    "conserto/pomm-model-manager":  "3.0.x-dev",
+    "conserto/pomm-cli":  "3.0.x-dev",
+    "conserto/pomm-symfony-bridge":  "4.0.x-dev",
     "symfony/framework-bundle": "~5.0|~6.0",
     "twig/twig": "3.x-dev",
     "sensio/framework-extra-bundle": "~5.0|~6.0"

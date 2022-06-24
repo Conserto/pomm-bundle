@@ -23,11 +23,6 @@ class IndexController
     ) {
     }
 
-    public function pingAction(): Response
-    {
-        return new Response("PING");
-    }
-
     public function indexAction(): Response
     {
         $this->pomm->getQueryManager()

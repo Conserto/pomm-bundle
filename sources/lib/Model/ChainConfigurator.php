@@ -29,7 +29,6 @@ class ChainConfigurator
 
     public function configure(Pomm $pomm): void
     {
-
         foreach ($this->configurators as $configurator) {
             $configurator->configure($pomm);
         }

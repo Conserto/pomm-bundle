@@ -42,7 +42,7 @@ class ContainerModelPooler extends ModelPooler implements ContainerAwareInterfac
     /**
      * {@inheritdoc}
      */
-    protected function createClient(object|string $identifier): Model
+    protected function createClient(string $identifier): Model
     {
         if (array_key_exists($identifier, $this->serviceMap)) {
             return $this->container->get($this->serviceMap[$identifier]);
