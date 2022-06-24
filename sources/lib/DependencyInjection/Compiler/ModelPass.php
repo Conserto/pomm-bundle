@@ -9,6 +9,7 @@
  */
 namespace PommProject\PommBundle\DependencyInjection\Compiler;
 
+use PommProject\PommBundle\Model\ServiceMapInterface;
 use Symfony\Component\DependencyInjection as DI;
 
 /**
@@ -44,7 +45,7 @@ class ModelPass implements DI\Compiler\CompilerPassInterface
                 if ($container->hasDefinition($serviceId)) {
                     $definitions[$serviceId] = $container->getDefinition($serviceId);
 
-                    $interface = \PommProject\PommBundle\Model\ServiceMapInterface::class;
+                    $interface = ServiceMapInterface::class;
                     if (!in_array($interface, class_implements($definitions[$serviceId]->getClass()), true)) {
                         throw new \RuntimeException(sprintf('Your pooler should implement %s.', $interface));
                     }

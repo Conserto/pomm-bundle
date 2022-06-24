@@ -2,6 +2,7 @@
 
 namespace PommProject\PommBundle\DependencyInjection\Compiler;
 
+use PommProject\Foundation\Session\Session;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -46,7 +47,7 @@ class BuilderPass implements CompilerPassInterface
             }
 
             //register all session's into the container
-            $session = new Definition(\PommProject\Foundation\Session\Session::class);
+            $session = new Definition(Session::class);
             $session->setFactory([new Reference('pomm'), 'getSession'])
                 ->addArgument($name)
             ;

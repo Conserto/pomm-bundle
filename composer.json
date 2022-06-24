@@ -21,12 +21,12 @@
     "conserto/pomm-model-manager":  "dev-upgrade_php_8_1",
     "conserto/pomm-cli":  "dev-upgrade_php_8_1",
     "conserto/pomm-symfony-bridge":  "dev-upgrade_php_8_1",
-    "symfony/framework-bundle": "~6.0",
+    "symfony/framework-bundle": "~5.0|~6.0",
     "twig/twig": "3.x-dev",
-    "sensio/framework-extra-bundle": "^6.2"
+    "sensio/framework-extra-bundle": "~5.0|~6.0"
   },
   "require-dev": {
-    "symfony/console": "~6.0",
+    "symfony/console": "~5.0|~6.0",
     "squizlabs/php_codesniffer": "~3.7",
     "phpstan/phpstan": "1.7.x-dev"
   },

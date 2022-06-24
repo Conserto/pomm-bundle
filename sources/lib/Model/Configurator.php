@@ -10,6 +10,7 @@
 
 namespace PommProject\PommBundle\Model;
 
+use PommProject\Foundation\Exception\FoundationException;
 use PommProject\Foundation\Pomm;
 use PommProject\Foundation\Session\Session;
 
@@ -29,6 +30,9 @@ class Configurator
     {
     }
 
+    /**
+     * @throws FoundationException
+     */
     public function configure(Pomm $pomm): void
     {
         foreach ($pomm->getSessionBuilders() as $name => $builder) {

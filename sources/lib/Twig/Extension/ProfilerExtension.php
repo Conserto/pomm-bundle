@@ -9,6 +9,7 @@
  */
 namespace PommProject\PommBundle\Twig\Extension;
 
+use PommProject\SymfonyBridge\DatabaseDataCollector;
 use Twig\Error\LoaderError;
 use Twig\Extension\AbstractExtension;
 use Twig\Loader\FilesystemLoader;
@@ -51,7 +52,7 @@ class ProfilerExtension extends AbstractExtension
      */
     private function getTemplateDirectory(): string
     {
-        $r = new \ReflectionClass(\PommProject\SymfonyBridge\DatabaseDataCollector::class);
+        $r = new \ReflectionClass(DatabaseDataCollector::class);
 
         return dirname($r->getFileName(), 3).'/views';
     }
@@ -64,7 +65,7 @@ class ProfilerExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('sql_format', fn ($sql) =>\SqlFormatter::format($sql)),
+            new TwigFilter('sql_format', fn ($sql) => \SqlFormatter::format($sql)),
         ];
     }
 }
