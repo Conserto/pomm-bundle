@@ -1,7 +1,7 @@
 {
   "name": "conserto/pomm-bundle",
   "type": "symfony-bundle",
-  "description": "The Symfony2 bundle for Pomm2",
+  "description": "The Symfony bundle for Pomm",
   "keywords": ["orm", "postgresql", "database", "symfony", "pomm"],
   "homepage": "http://www.pomm-project.org",
   "license": "MIT",
@@ -18,17 +18,17 @@
   "require": {
     "php": ">=8.1",
     "jdorn/sql-formatter": "~1.2",
-    "conserto/pomm-model-manager":  "3.0.x-dev",
-    "conserto/pomm-cli":  "3.0.x-dev",
-    "conserto/pomm-symfony-bridge":  "4.0.x-dev",
+    "conserto/pomm-model-manager": "^3.0",
+    "conserto/pomm-cli": "^3.0",
+    "conserto/pomm-symfony-bridge":  "^4.0",
     "symfony/framework-bundle": "~5.0|~6.0",
-    "twig/twig": "3.x-dev",
+    "twig/twig": "~3.0",
     "sensio/framework-extra-bundle": "~5.0|~6.0"
   },
   "require-dev": {
     "symfony/console": "~5.0|~6.0",
     "squizlabs/php_codesniffer": "~3.7",
-    "phpstan/phpstan": "1.7.x-dev"
+    "phpstan/phpstan": "^1.8"
   },
   "suggest": {
       "symfony/web-profiler-bundle": "Display queries log",
@@ -39,10 +39,5 @@
       "PommProject\\PommBundle\\": "sources/lib/"
     }
   },
-  "extra": {
-      "branch-alias": {
-          "dev-master": "2.0-dev"
-      }
-  },
-  "minimum-stability": "dev"
+  "minimum-stability": "stable"
 }
