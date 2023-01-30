@@ -45,7 +45,7 @@ class EntityValueResolver implements ValueResolverInterface
 
     private function getOptions(ArgumentMetadata $argument): array
     {
-        $entityAttribute = static::getEntityAttribute($argument);
+        $entityAttribute = self::getEntityAttribute($argument);
         return [
             'model' => $entityAttribute?->getModelClass() ?? $argument->getType() . 'Model',
             'session' =>
