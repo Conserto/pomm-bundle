@@ -86,7 +86,7 @@ jobs:
 
       - name: PHPCS Analysis
         run: |
-          ./vendor/bin/phpcs --standard=psr2 --runtime-set ignore_warnings_on_exit true --report=summary ./sources
+          ./vendor/bin/phpcs --standard=psr12 --runtime-set ignore_warnings_on_exit true --report=summary ./sources
 
       - name: Run tests
         run: |

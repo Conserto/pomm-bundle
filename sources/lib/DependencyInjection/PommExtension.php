@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the PommProject/PommBundle package.
  *
@@ -37,7 +38,7 @@ class PommExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services/pomm.yml');
         $loader->load('services/profiler.yml');
 

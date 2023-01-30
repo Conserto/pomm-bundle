@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the PommProject/PommBundle package.
  *
@@ -54,7 +55,7 @@ class ProfilerExtension extends AbstractExtension
     {
         $r = new \ReflectionClass(DatabaseDataCollector::class);
 
-        return dirname($r->getFileName(), 3).'/views';
+        return dirname($r->getFileName(), 3) . '/views';
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the PommProject/PommBundle package.
  *
@@ -38,10 +39,10 @@ class PommBundle extends Bundle
 
         $this->checkPhpVersion();
 
-        $container->addCompilerPass(new DependencyInjection\Compiler\ProfilerPass);
-        $container->addCompilerPass(new DependencyInjection\Compiler\PoolerPass);
-        $container->addCompilerPass(new DependencyInjection\Compiler\ModelPass);
-        $container->addCompilerPass(new DependencyInjection\Compiler\BuilderPass);
+        $container->addCompilerPass(new DependencyInjection\Compiler\ProfilerPass());
+        $container->addCompilerPass(new DependencyInjection\Compiler\PoolerPass());
+        $container->addCompilerPass(new DependencyInjection\Compiler\ModelPass());
+        $container->addCompilerPass(new DependencyInjection\Compiler\BuilderPass());
     }
 
     private function checkPhpVersion(): void
