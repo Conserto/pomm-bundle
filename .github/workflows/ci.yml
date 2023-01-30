@@ -69,10 +69,14 @@ jobs:
           nohup php -S localhost:8080 -t web &> /dev/null &
           nohup xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar /usr/local/bin/selenium-server-standalone.jar standalone --host 127.0.0.1 --port 4444 &> /dev/null &
 
-      - name: Setup PHP
+      - name: Setup PHP 8.1
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
+      - name: Setup PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
 
       - name: PHPStan Static Analysis
         uses: php-actions/phpstan@v2

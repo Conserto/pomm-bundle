@@ -23,7 +23,7 @@
     "conserto/pomm-symfony-bridge":  "^4.0",
     "symfony/framework-bundle": "~5.0|~6.0",
     "twig/twig": "~3.0",
-    "sensio/framework-extra-bundle": "~5.0|~6.0"
+    "symfony/http-kernel": "^6.2"
   },
   "require-dev": {
     "symfony/console": "~5.0|~6.0",

@@ -97,37 +97,28 @@ The Pomm service is available in the DIC as any other service:
 
 It is now possible to tune and create a model layer as described in [the quick start guide](http://www.pomm-project.org/documentation/sandbox2).
 
-## Param converter
+## Value resolver
 
-This bundle provide a [param
-converter](http://symfony.com/doc/master/bundles/SensioFrameworkExtraBundle/annotations/converters.html)
-to convert request to a flexible entity. The converter search in the request the
+This bundle provide a [value resolver](https://symfony.com/doc/current/controller/value_resolver.html)
+to convert request to a flexible entity. The resolver search in the request the
 parameters with names matching primary key.
 
-You can specify witch connexion use in the option:
+You can specify witch connexion use in the attribute #[Entity]:
 
 ```php
-
-/**
- * @ParamConverter("student", options={"session": "my_db2"})
- */
-public function getAction(Student $student)
+public function getAction(#[Entity('my_db2')] Student $student)
 ```
 
 By default, the model used for find the entity is deduce by adding ``Model`` to
-entity class name. If you have a different class name, you can use the ``model``
+entity class name. If you have a different class name, you can use the ``modelClass``
 option:
 
 ```php
-
-/**
- * @ParamConverter("student", options={"model": "StudentModel"})
- */
-public function getAction(Student $student)
+public function getAction(#[Entity(modelClass: 'StudentModel')] Student $student)
 ```
 
 This feature require
-[sensio/framework-extra-bundle](http://symfony.com/doc/master/bundles/SensioFrameworkExtraBundle/index.html).
+[symfony/http-kernel](https://symfony.com/doc/current/components/http_kernel.html).
 
 ## Serializer
 
