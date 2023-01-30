@@ -31,7 +31,7 @@
     "phpstan/phpstan": "^1.8"
   },
   "suggest": {
-      "symfony/web-profiler-bundle": "Display queries log",
+      "symfony/web-profiler-bundle": "Display queries log"
   },
   "autoload": {
     "psr-4": {
