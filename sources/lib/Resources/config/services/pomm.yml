@@ -5,6 +5,7 @@ services:
         public: true
 
     PommProject\PommBundle\ValueResolver\EntityValueResolver:
+        arguments: ['@pomm']
         tags:
             - { name: controller.argument_value_resolver }
 
