@@ -40,4 +40,24 @@ class FeatureContext extends MinkContext
     {
         $this->assertElementOnPage('.sf-toolbar');
     }
+
+    /**
+     * @@Then /^the response status code should be (?P<code>\d+)$/
+     */
+    public function assertResponseStatus($code)
+    {
+        // Add curl function for support sf2.8 to Sf5 because goutte-driver doesn't support.
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->getSession()->getCurrentUrl());
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_exec($ch);
+        $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ((int)$code !== $responseCode) {
+            throw new \Exception(sprintf('The HTTP response is not correct. Actual: %s. Expected: %s', $responseCode, $code));
+        }
+
+    }
+
 }
