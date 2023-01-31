@@ -1,12 +1,12 @@
 {
     "require": {
-        "symfony/symfony": "^6.2",
-        "symfony/monolog-bundle": "~3.0",
+        "symfony/symfony": "^6.0",
+        "symfony/monolog-bundle": "^3.0",
         "conserto/pomm-model-manager": "^3.0",
         "conserto/pomm-cli": "^3.0",
         "conserto/pomm-symfony-bridge": "^4.0",
         "conserto/pomm-foundation": "^3.0",
-        "symfony/framework-bundle": "~6.0",
+        "symfony/framework-bundle": "^6.0",
         "jdorn/sql-formatter": "~1.2",
         "symfony/contracts": "^2.5",
         "behat/behat": "^3.10",
