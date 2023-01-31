@@ -20,7 +20,7 @@
     "jdorn/sql-formatter": "~1.2",
     "conserto/pomm-model-manager": "^3.0",
     "conserto/pomm-cli": "^3.0",
-    "conserto/pomm-symfony-bridge":  "^4.0",
+    "conserto/pomm-symfony-bridge": "^4.0",
     "symfony/framework-bundle": "~5.0|~6.0",
     "twig/twig": "~3.0",
     "symfony/http-kernel": "^6.2"
