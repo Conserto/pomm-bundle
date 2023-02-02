@@ -5,7 +5,7 @@ namespace AppBundle\Controller;
 use \AppBundle\Model\MyDb1\PublicSchema\Config;
 use \AppBundle\Model\MyDb1\PublicSchema\ServiceModel;
 use \PommProject\Foundation\Session\Session;
-use \Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use PommProject\PommBundle\ValueResolver\Attribute\Entity;
 use \Symfony\Component\Serializer\Serializer;
 use \Symfony\Component\HttpFoundation\Response;
 use \Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface;
@@ -47,11 +47,10 @@ class IndexController
 
     /**
      * Get data with default session
-     *
-     * @ParamConverter("config", options={"model": "\AppBundle\Model\MyDb1\PublicSchema\ConfigModel"})
      */
-    public function getDefaultSessionAction(Config $config): Response
-    {
+    public function getDefaultSessionAction(
+        #[Entity(modelClass: '\AppBundle\Model\MyDb1\PublicSchema\ConfigModel')] Config $config
+    ): Response {
         return new Response(
             $this->templating->render(
                 'Front/get.html.twig',
@@ -62,11 +61,10 @@ class IndexController
 
     /**
      * Get data with session 1
-     *
-     * @ParamConverter("config", options={"session": "my_db", "model": "\AppBundle\Model\MyDb1\PublicSchema\ConfigModel"})
      */
-    public function getSessionAction(Config $config): Response
-    {
+    public function getSessionAction(
+        #[Entity('my_db', '\AppBundle\Model\MyDb1\PublicSchema\ConfigModel')] Config $config
+    ): Response {
         return new Response(
             $this->templating->render(
                 'Front/get.html.twig',
@@ -77,11 +75,10 @@ class IndexController
 
     /**
      * Get data with session 2
-     *
-     * @ParamConverter("config", options={"session": "my_db2", "model": "\AppBundle\Model\MyDb1\PublicSchema\ConfigModel"})
      */
-    public function getSession2Action(Config $config): Response
-    {
+    public function getSession2Action(
+        #[Entity('my_db2', '\AppBundle\Model\MyDb1\PublicSchema\ConfigModel')] Config $config
+    ): Response {
         return new Response(
             $this->templating->render(
                 'Front/get.html.twig',

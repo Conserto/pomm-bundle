@@ -4,12 +4,10 @@ services:
         configurator: ['@pomm.session_builder.configurator_chain', configure]
         public: true
 
-    pomm.converter.entity:
-        class: 'PommProject\PommBundle\Request\ParamConverter\EntityParamConverter'
+    PommProject\PommBundle\ValueResolver\EntityValueResolver:
         arguments: ['@pomm']
         tags:
-            - { name: request.param_converter, converter: pomm.entity }
-        public: true
+            - { name: controller.argument_value_resolver }
 
     pomm.serializer.normalizer:
         class: 'PommProject\SymfonyBridge\Serializer\Normalizer\FlexibleEntityNormalizer'

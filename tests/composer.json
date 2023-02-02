@@ -1,17 +1,17 @@
 {
     "require": {
-        "symfony/symfony": "~6.0",
-        "symfony/monolog-bundle": "~3.0",
-        "sensio/framework-extra-bundle": "~6.0",
+        "symfony/symfony": "^6.0",
+        "symfony/monolog-bundle": "^3.0",
         "conserto/pomm-model-manager": "^3.0",
         "conserto/pomm-cli": "^3.0",
         "conserto/pomm-symfony-bridge": "^4.0",
         "conserto/pomm-foundation": "^3.0",
-        "symfony/framework-bundle": "~6.0",
+        "symfony/framework-bundle": "^6.0",
         "jdorn/sql-formatter": "~1.2",
         "symfony/contracts": "^2.5",
         "behat/behat": "^3.10",
-        "friends-of-behat/mink-extension": "^2.6"
+        "friends-of-behat/mink-extension": "^2.6",
+        "symfony/http-kernel": "^6.2"
     },
     "require-dev": {
         "behat/mink-selenium2-driver": "1.6.0",
