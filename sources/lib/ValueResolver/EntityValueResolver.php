@@ -30,13 +30,17 @@ class EntityValueResolver implements ValueResolverInterface
 
         $model = $options['session']->getModel($options['model']);
 
-        $pk = $this->getPk($model, $request);
+        $entity = null;
 
-        if (empty($pk)) {
-            yield null;
+        try {
+            $entity = $model->findByPk($this->getPk($model, $request));
+        } catch (\LogicException $e) {
+            if ($options["optional"] === false) {
+                throw $e;
+            }
         }
 
-        yield $model->findByPk($pk);
+        return [$entity];
     }
 
     private function getOptions(ArgumentMetadata $argument): array
@@ -48,6 +52,7 @@ class EntityValueResolver implements ValueResolverInterface
                 $entityAttribute?->getSessionName() ?
                     $this->pomm[$entityAttribute->getSessionName()] :
                     $this->pomm->getDefaultSession(),
+            'optional' => $argument->hasDefaultValue(),
         ];
     }
 
@@ -58,9 +63,10 @@ class EntityValueResolver implements ValueResolverInterface
             ->getPrimaryKey();
 
         foreach ($primaryKeys as $key) {
-            if ($request->attributes->has($key)) {
-                $values[$key] = $request->attributes->get($key);
+            if (!$request->attributes->has($key)) {
+                throw new \LogicException("Missing primary key element '$key'");
             }
+            $values[$key] = $request->attributes->get($key);
         }
         return $values;
     }
