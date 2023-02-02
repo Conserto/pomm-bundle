@@ -30,17 +30,7 @@ class EntityValueResolver implements ValueResolverInterface
 
         $model = $options['session']->getModel($options['model']);
 
-        $entity = null;
-
-        try {
-            $entity = $model->findByPk($this->getPk($model, $request));
-        } catch (\LogicException $e) {
-            if ($options["optional"] === false) {
-                throw $e;
-            }
-        }
-
-        return [$entity];
+        return [$model->findByPk($this->getPk($model, $request))];
     }
 
     private function getOptions(ArgumentMetadata $argument): array
@@ -52,7 +42,6 @@ class EntityValueResolver implements ValueResolverInterface
                 $entityAttribute?->getSessionName() ?
                     $this->pomm[$entityAttribute->getSessionName()] :
                     $this->pomm->getDefaultSession(),
-            'optional' => $argument->hasDefaultValue(),
         ];
     }
 
