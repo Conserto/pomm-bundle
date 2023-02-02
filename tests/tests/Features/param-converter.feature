@@ -7,6 +7,7 @@ Feature: Entity Param Converter
 
     Scenario:
         When I am on "/app_dev.php/get"
+        Then print last response
         Then the response status code should be 200
         Then I should see "config => null"
 
