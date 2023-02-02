@@ -30,7 +30,13 @@ class EntityValueResolver implements ValueResolverInterface
 
         $model = $options['session']->getModel($options['model']);
 
-        yield $model->findByPk($this->getPk($model, $request));
+        $pk = $this->getPk($model, $request);
+
+        if (empty($pk)) {
+            yield null;
+        }
+
+        yield $model->findByPk($pk);
     }
 
     private function getOptions(ArgumentMetadata $argument): array
@@ -52,10 +58,9 @@ class EntityValueResolver implements ValueResolverInterface
             ->getPrimaryKey();
 
         foreach ($primaryKeys as $key) {
-            if (!$request->attributes->has($key)) {
-                throw new \LogicException("Missing primary key element '$key'");
+            if ($request->attributes->has($key)) {
+                $values[$key] = $request->attributes->get($key);
             }
-            $values[$key] = $request->attributes->get($key);
         }
         return $values;
     }
