@@ -3,7 +3,7 @@ Feature: Entity Serialization
     Scenario:
         When I am on "/app_dev.php/serialize"
         Then the response status code should be 200
-        And I should see "[{\"point\":{\"x\":1,\"y\":2}}]"
+        And I should see "[{\"point\":{\"x\":1.0,\"y\":2.0}}]"
 
     Scenario:
         When I am on "/app_dev.php/deserialize"

@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ master, '4.0' ]
+    branches: [ master, '4.0', '5.0' ]
   pull_request:
-    branches: [ master, '4.0' ]
+    branches: [ master, '4.0', '5.0' ]
 
   workflow_dispatch:
 
@@ -69,10 +69,14 @@ jobs:
           nohup php -S localhost:8080 -t web &> /dev/null &
           nohup xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar /usr/local/bin/selenium-server-standalone.jar standalone --host 127.0.0.1 --port 4444 &> /dev/null &
 
-      - name: Setup PHP
+      - name: Setup PHP 8.1
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
+      - name: Setup PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
 
       - name: PHPStan Static Analysis
         uses: php-actions/phpstan@v2
@@ -82,7 +86,7 @@ jobs:
 
       - name: PHPCS Analysis
         run: |
-          ./vendor/bin/phpcs --standard=psr2 --runtime-set ignore_warnings_on_exit true --report=summary ./sources
+          ./vendor/bin/phpcs --standard=psr12 --runtime-set ignore_warnings_on_exit true --report=summary ./sources
 
       - name: Run tests
         run: |
