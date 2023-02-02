@@ -30,7 +30,7 @@ class EntityValueResolver implements ValueResolverInterface
 
         $model = $options['session']->getModel($options['model']);
 
-        return [$model->findByPk($this->getPk($model, $request))];
+        yield $model->findByPk($this->getPk($model, $request));
     }
 
     private function getOptions(ArgumentMetadata $argument): array
