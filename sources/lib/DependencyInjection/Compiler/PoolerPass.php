@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection as DI;
  */
 class PoolerPass implements DI\Compiler\CompilerPassInterface
 {
-    public function process(DI\ContainerBuilder $container)
+    public function process(DI\ContainerBuilder $container): void
     {
         // find all service IDs with the appropriate tag
         $taggedServices = $container->findTaggedServiceIds('pomm.pooler');

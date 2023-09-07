@@ -6,7 +6,7 @@ use Symfony\Component\DependencyInjection as DI;
 
 class ProfilerPass implements DI\Compiler\CompilerPassInterface
 {
-    public function process(DI\ContainerBuilder $container)
+    public function process(DI\ContainerBuilder $container): void
     {
         if ($container->hasDefinition('profiler') === false) {
             return;
