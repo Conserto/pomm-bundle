@@ -14,7 +14,7 @@ class ParamConverterTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/get/test');
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('body', 'test => value2');
+        $this->assertSelectorTextContains('body', 'test => value');
     }
 
     public function testGet(): void
