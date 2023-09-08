@@ -9,13 +9,11 @@
         "symfony/framework-bundle": "^6.0",
         "jdorn/sql-formatter": "~1.2",
         "symfony/contracts": "^2.5",
-        "behat/behat": "^3.10",
-        "friends-of-behat/mink-extension": "^2.6",
         "symfony/http-kernel": "^6.2"
     },
     "require-dev": {
-        "behat/mink-selenium2-driver": "1.6.0",
-        "instaclick/php-webdriver": "^1.4.7"
+        "symfony/test-pack": "^1.1",
+        "masterminds/html5": "^2.8"
     },
     "autoload": {
         "psr-0": { "AppBundle\\": "src/" },
