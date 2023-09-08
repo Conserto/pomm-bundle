@@ -33,7 +33,7 @@ class PommBundle extends Bundle
      *
      * @see Bundle
      */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
@@ -65,7 +65,7 @@ class PommBundle extends Bundle
     /**
      * @see Bundle
      */
-    public function shutdown()
+    public function shutdown(): void
     {
         $this->container->get('pomm')->shutdown();
     }

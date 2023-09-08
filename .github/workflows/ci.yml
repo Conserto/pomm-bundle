@@ -13,11 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      selenium:
-        image: selenium/standalone-chrome:3.141.59-oxygen
-        env:
-          GIT_CLEAN_FLAGS: none
-          SELENIUM_HOST: "selenium-standalone-chrome"
       postgres:
         image: postgres
         env:
@@ -38,20 +33,6 @@ jobs:
 
       - name: Build
         run: |
-          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee -a /etc/apt/sources.list.d/google-chrome.list
-          sudo apt-get update -qqy
-          sudo apt-get -qqy install google-chrome-stable
-          CHROME_VERSION=$(google-chrome-stable --version)
-          CHROME_FULL_VERSION=${CHROME_VERSION%%.*}
-          CHROME_MAJOR_VERSION=${CHROME_FULL_VERSION//[!0-9]}
-          sudo rm /etc/apt/sources.list.d/google-chrome.list
-          export CHROMEDRIVER_VERSION=`curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_MAJOR_VERSION%%.*}`
-          curl -L -O "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
-          unzip chromedriver_linux64.zip && chmod +x chromedriver && sudo mv chromedriver /usr/local/bin
-          chromedriver -version
-          curl -L -O "https://github.com/SeleniumHQ/selenium/releases/download/selenium-4.2.0/selenium-server-4.2.2.jar"
-          sudo mv selenium-server-4.2.2.jar /usr/local/bin/selenium-server-standalone.jar
           psql -c 'CREATE DATABASE pomm_test' -U postgres -h 127.0.0.1 postgres
           psql -c 'CREATE EXTENSION hstore' -U postgres -h 127.0.0.1 pomm_test
           psql -c 'CREATE EXTENSION ltree' -U postgres  -h 127.0.0.1 pomm_test
@@ -66,8 +47,6 @@ jobs:
           composer update -n --prefer-dist --prefer-stable
           rm -rf vendor/conserto/pomm-bundle
           ln -s ../../../ vendor/conserto/pomm-bundle
-          nohup php -S localhost:8080 -t web &> /dev/null &
-          nohup xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar /usr/local/bin/selenium-server-standalone.jar standalone --host 127.0.0.1 --port 4444 &> /dev/null &
 
       - name: Setup PHP 8.1
         uses: shivammathur/setup-php@v2
@@ -92,4 +71,4 @@ jobs:
         run: |
           cd tests/
           ./app/console pomm:generate:schema-all -d 'src/'  -a 'AppBundle\Model' my_db1
-          ./bin/behat -vvv
+          ./bin/phpunit -c tests/phpunit.xml tests/PhpUnit/
