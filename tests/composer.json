@@ -21,7 +21,7 @@
         "classmap": [ "app/AppKernel.php" ]
     },
     "autoload-dev": {
-        "files": ["tests/Features/bootstrap/FeatureContext.php"]
+        "psr-4": { "App\\Tests\\": "tests/" }
     },
     "config": {
         "bin-dir": "bin"
