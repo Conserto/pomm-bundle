@@ -1,4 +1,5 @@
 {
+  "version": "5.0.1",
   "name": "conserto/pomm-bundle",
   "type": "symfony-bundle",
   "description": "The Symfony bundle for Pomm",

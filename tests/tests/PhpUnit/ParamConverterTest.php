@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Phpunit;
+namespace App\Tests\PhpUnit;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
