@@ -117,7 +117,7 @@ EOF;
         $config = $this->serializer->deserialize($json, '\AppBundle\Model\MyDb1\PublicSchema\Config', 'json');
 
         return new Response(
-            var_export($config),
+            var_export($config, true),
             Response::HTTP_OK
         );
     }
