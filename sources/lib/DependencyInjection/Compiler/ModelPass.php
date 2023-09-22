@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection as DI;
  */
 class ModelPass implements DI\Compiler\CompilerPassInterface
 {
-    public function process(DI\ContainerBuilder $container)
+    public function process(DI\ContainerBuilder $container): void
     {
         $this->addTagged($container, 'pomm.model', 'pomm.pooler.model', 'getModel');
         $this->addTagged($container, 'pomm.model_layer', 'pomm.pooler.model_layer', 'getModelLayer');
