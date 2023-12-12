@@ -52,16 +52,14 @@ services:
 
     pomm.pooler.model:
         class: 'PommProject\PommBundle\Model\ContainerModelPooler'
-        calls:
-            - ['setContainer', ['@service_container']]
+        arguments: ['@service_container']
         tags:
             - { name: pomm.pooler }
         public: true
 
     pomm.pooler.model_layer:
         class: 'PommProject\PommBundle\Model\ContainerModelLayerPooler'
-        calls:
-            - ['setContainer', ['@service_container']]
+        arguments: ['@service_container']
         tags:
             - { name: pomm.pooler }
         public: true
