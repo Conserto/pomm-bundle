@@ -13,6 +13,7 @@ namespace PommProject\PommBundle\Model;
 use PommProject\ModelManager\Model\Model;
 use PommProject\ModelManager\Model\ModelPooler;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Contracts\Service\Attribute\Required;
 
 /**
  * PommExtension
@@ -27,10 +28,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ContainerModelPooler extends ModelPooler implements ServiceMapInterface
 {
+    protected ContainerInterface $container;
+
     private array $serviceMap = [];
 
-    public function __construct(protected ContainerInterface $container)
+    #[Required]
+    public function setContainer(ContainerInterface $container): void
     {
+        $this->container = $container;
     }
 
     /**

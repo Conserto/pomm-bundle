@@ -14,6 +14,7 @@ use PommProject\Foundation\Client\ClientPooler;
 use PommProject\ModelManager\ModelLayer\ModelLayer;
 use PommProject\ModelManager\ModelLayer\ModelLayerPooler;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Contracts\Service\Attribute\Required;
 
 /**
  * ModelLayerPooler
@@ -28,10 +29,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ContainerModelLayerPooler extends ModelLayerPooler implements ServiceMapInterface
 {
+    protected ContainerInterface $container;
+
     private array $serviceMap = [];
 
-    public function __construct(protected ContainerInterface $container)
+    #[Required]
+    public function setContainer(ContainerInterface $container): void
     {
+        $this->container = $container;
     }
 
     /**
