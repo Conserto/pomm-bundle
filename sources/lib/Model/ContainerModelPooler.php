@@ -29,7 +29,7 @@ class ContainerModelPooler extends ModelPooler implements ServiceMapInterface
 {
     private array $serviceMap = [];
 
-    public function __construct(private readonly ContainerInterface $container)
+    public function __construct(protected ContainerInterface $container)
     {
     }
 

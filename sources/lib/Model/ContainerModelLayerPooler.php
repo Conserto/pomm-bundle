@@ -30,7 +30,7 @@ class ContainerModelLayerPooler extends ModelLayerPooler implements ServiceMapIn
 {
     private array $serviceMap = [];
 
-    public function __construct(private readonly ContainerInterface $container)
+    public function __construct(protected ContainerInterface $container)
     {
     }
 
