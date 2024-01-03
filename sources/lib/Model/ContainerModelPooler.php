@@ -12,8 +12,8 @@ namespace PommProject\PommBundle\Model;
 
 use PommProject\ModelManager\Model\Model;
 use PommProject\ModelManager\Model\ModelPooler;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Contracts\Service\Attribute\Required;
 
 /**
  * PommExtension
@@ -26,11 +26,17 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
  * @license   X11 {@link http://opensource.org/licenses/mit-license.php}
  * @see       Extension
  */
-class ContainerModelPooler extends ModelPooler implements ContainerAwareInterface, ServiceMapInterface
+class ContainerModelPooler extends ModelPooler implements ServiceMapInterface
 {
-    use ContainerAwareTrait;
+    protected ContainerInterface $container;
 
     private array $serviceMap = [];
+
+    #[Required]
+    public function setContainer(ContainerInterface $container): void
+    {
+        $this->container = $container;
+    }
 
     /**
      * {@inheritdoc}
