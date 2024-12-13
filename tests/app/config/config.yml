@@ -10,7 +10,6 @@ framework:
         strict_requirements: ~
     form:            ~
     csrf_protection: ~
-    validation:      { enable_annotations: true }
 
         #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
