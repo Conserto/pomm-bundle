@@ -59,7 +59,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('pomm:default')->end()
                         ->end()
                         ->validate()
-                            ->ifTrue(fn($v) => isset($v['session_builder']) && isset($v['class:session_builder']))
+                            ->ifTrue(fn($v): bool => isset($v['session_builder']) && isset($v['class:session_builder']))
                             ->thenInvalid('You cannot use both "session_builder" and "class:session_builder" at the same time.')
                         ->end()
                         ->beforeNormalization()

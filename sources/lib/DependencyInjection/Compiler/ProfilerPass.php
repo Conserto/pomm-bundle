@@ -2,6 +2,8 @@
 
 namespace PommProject\PommBundle\DependencyInjection\Compiler;
 
+use PommProject\PommBundle\Twig\Extension\ProfilerExtension;
+use PommProject\SymfonyBridge\Controller\PommProfilerController;
 use Symfony\Component\DependencyInjection as DI;
 
 class ProfilerPass implements DI\Compiler\CompilerPassInterface
@@ -12,7 +14,7 @@ class ProfilerPass implements DI\Compiler\CompilerPassInterface
             return;
         }
 
-        $definition = new DI\Definition("PommProject\\SymfonyBridge\\Controller\\PommProfilerController", [
+        $definition = new DI\Definition(PommProfilerController::class, [
             new DI\Reference('profiler'),
             new DI\Reference('twig'),
             new DI\Reference('pomm')
@@ -20,10 +22,7 @@ class ProfilerPass implements DI\Compiler\CompilerPassInterface
         $definition->setPublic(true);
         $container->setDefinition('pomm.controller.profiler', $definition);
 
-        $definition = new DI\Definition(
-            "PommProject\\PommBundle\\Twig\\Extension\\ProfilerExtension",
-            [new DI\Reference('twig.loader.filesystem')]
-        );
+        $definition = new DI\Definition(ProfilerExtension::class, [new DI\Reference('twig.loader.filesystem')]);
         //we run after the twig tags are collected so we need to manually do what twig compiler pass does
         $twig = $container->getDefinition('twig');
         $twig->addMethodCall('addExtension', [new DI\Reference('pomm.twig_extension')]);

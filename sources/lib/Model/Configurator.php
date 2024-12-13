@@ -36,7 +36,7 @@ class Configurator
     public function configure(Pomm $pomm): void
     {
         foreach ($pomm->getSessionBuilders() as $name => $builder) {
-            $pomm->addPostConfiguration($name, function (Session $session) {
+            $pomm->addPostConfiguration($name, function (Session $session): void {
                 foreach ($this->poolers as $pooler) {
                     $session->registerClientPooler($pooler);
                 }
