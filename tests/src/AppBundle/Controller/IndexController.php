@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use \AppBundle\Model\MyDb1\PublicSchema\Config;
+use AppBundle\Model\MyDb1\PublicSchema\ConfigModel;
 use \AppBundle\Model\MyDb1\PublicSchema\ServiceModel;
 use \PommProject\Foundation\Session\Session;
 use PommProject\PommBundle\ValueResolver\Attribute\Entity;
@@ -29,19 +30,14 @@ class IndexController
             ->query('select 1');
 
         return new Response(
-            $this->templating->render(
-                'Front/index.html.twig'
-            )
+            $this->templating->render('Front/index.html.twig')
         );
     }
 
-    public function getAction(Config $config = null): Response
+    public function getAction(?Config $config = null): Response
     {
         return new Response(
-            $this->templating->render(
-                'Front/get.html.twig',
-                compact('config')
-            )
+            $this->templating->render('Front/get.html.twig', compact('config'))
         );
     }
 
@@ -49,13 +45,10 @@ class IndexController
      * Get data with default session
      */
     public function getDefaultSessionAction(
-        #[Entity(modelClass: '\AppBundle\Model\MyDb1\PublicSchema\ConfigModel')] Config $config
+        #[Entity(modelClass: ConfigModel::class)] Config $config
     ): Response {
         return new Response(
-            $this->templating->render(
-                'Front/get.html.twig',
-                compact('config')
-            )
+            $this->templating->render('Front/get.html.twig', compact('config'))
         );
     }
 
@@ -63,13 +56,10 @@ class IndexController
      * Get data with session 1
      */
     public function getSessionAction(
-        #[Entity('my_db', '\AppBundle\Model\MyDb1\PublicSchema\ConfigModel')] Config $config
+        #[Entity('my_db', ConfigModel::class)] Config $config
     ): Response {
         return new Response(
-            $this->templating->render(
-                'Front/get.html.twig',
-                compact('config')
-            )
+            $this->templating->render('Front/get.html.twig', compact('config'))
         );
     }
 
@@ -77,13 +67,10 @@ class IndexController
      * Get data with session 2
      */
     public function getSession2Action(
-        #[Entity('my_db2', '\AppBundle\Model\MyDb1\PublicSchema\ConfigModel')] Config $config
+        #[Entity('my_db2', ConfigModel::class)] Config $config
     ): Response {
         return new Response(
-            $this->templating->render(
-                'Front/get.html.twig',
-                compact('config')
-            )
+            $this->templating->render('Front/get.html.twig', compact('config'))
         );
     }
 
@@ -114,7 +101,7 @@ class IndexController
 }
 EOF;
 
-        $config = $this->serializer->deserialize($json, '\AppBundle\Model\MyDb1\PublicSchema\Config', 'json');
+        $config = $this->serializer->deserialize($json, Config::class, 'json');
 
         return new Response(
             var_export($config, true),
@@ -124,31 +111,25 @@ EOF;
 
     public function propertyListAction(): Response
     {
-        $info = $this->property->getProperties('AppBundle\Model\MyDb1\PublicSchema\Config');
+        $info = $this->property->getProperties(Config::class);
 
         return new Response(
-            $this->templating->render(
-                'Front/properties.html.twig',
-                compact('info')
-            )
+            $this->templating->render('Front/properties.html.twig', compact('info'))
         );
     }
 
     public function propertyTypeAction(string $property): Response
     {
-        $info = $this->property->getTypes('AppBundle\Model\MyDb1\PublicSchema\Config', $property);
+        $info = $this->property->getTypes(Config::class, $property);
 
         return new Response(
-            $this->templating->render(
-                'Front/property.html.twig',
-                compact('info')
-            )
+            $this->templating->render('Front/property.html.twig', compact('info'))
         );
     }
 
     public function serviceModelAction(): Response
     {
-        $model = $this->serviceSession->getModel('AppBundle\Model\MyDb1\PublicSchema\ServiceModel');
+        $model = $this->serviceSession->getModel(ServiceModel::class);
 
         return new Response('Created model as service. Sum:' . $model->getSum());
     }

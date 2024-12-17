@@ -47,8 +47,8 @@ class PommBundle extends Bundle
 
     private function checkPhpVersion(): void
     {
-        if (version_compare(PHP_VERSION, '8.1.0') < 0) {
-            @trigger_error('The pomm bundle stop supporting PHP <= 8.0', E_USER_DEPRECATED);
+        if (version_compare(PHP_VERSION, '8.4.0') < 0) {
+            @trigger_error('The pomm bundle stop supporting PHP <= 8.3', E_USER_DEPRECATED);
         }
     }
 

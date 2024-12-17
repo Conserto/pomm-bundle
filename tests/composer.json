@@ -1,19 +1,26 @@
 {
     "require": {
-        "symfony/symfony": "^6.0",
         "symfony/monolog-bundle": "^3.0",
-        "conserto/pomm-model-manager": "^3.0",
-        "conserto/pomm-cli": "^3.0",
-        "conserto/pomm-symfony-bridge": "^4.0",
-        "conserto/pomm-foundation": "^3.0",
-        "symfony/framework-bundle": "^6.0",
+        "conserto/pomm-model-manager": "^4.0",
+        "conserto/pomm-cli": "^4.0",
+        "conserto/pomm-symfony-bridge": "^5.0",
+        "conserto/pomm-foundation": "^4.0",
+        "symfony/framework-bundle": "^7.0",
         "jdorn/sql-formatter": "~1.2",
-        "symfony/contracts": "^2.5",
-        "symfony/http-kernel": "^6.2"
+        "symfony/contracts": "^3.0",
+        "symfony/http-kernel": "^7.0",
+        "symfony/twig-bundle": "^7.0",
+        "symfony/yaml": "^7.0",
+        "symfony/security-csrf": "^7.0",
+        "symfony/form": "^7.0"
     },
     "require-dev": {
-        "symfony/test-pack": "^1.1",
-        "masterminds/html5": "^2.8"
+        "masterminds/html5": "^2.8",
+        "phpunit/phpunit": "^10.0",
+        "symfony/browser-kit": "^7.0",
+        "symfony/css-selector": "^7.0",
+        "symfony/phpunit-bridge": "^7.2",
+        "symfony/web-profiler-bundle": "^7.0"
     },
     "autoload": {
         "psr-0": { "AppBundle\\": "src/" },

@@ -2,15 +2,15 @@ name: CI
 
 on:
   push:
-    branches: [ master, '4.0', '5.0' ]
+    branches: [ master, '6.0' ]
   pull_request:
-    branches: [ master, '4.0', '5.0' ]
+    branches: [ master, '6.0' ]
 
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     services:
       postgres:
@@ -31,6 +31,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Setup PHP 8.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+
       - name: Build
         run: |
           psql -c 'CREATE DATABASE pomm_test' -U postgres -h 127.0.0.1 postgres
@@ -48,20 +53,13 @@ jobs:
           rm -rf vendor/conserto/pomm-bundle
           ln -s ../../../ vendor/conserto/pomm-bundle
 
-      - name: Setup PHP 8.1
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
-      - name: Setup PHP 8.2
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-
       - name: PHPStan Static Analysis
         uses: php-actions/phpstan@v2
         with:
           configuration: phpstan.neon
           memory_limit: 256M
+          path: ''
+          php_version: 8.4
 
       - name: PHPCS Analysis
         run: |

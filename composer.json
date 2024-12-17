@@ -1,5 +1,5 @@
 {
-  "version": "5.1.2",
+  "version": "6.0.0",
   "name": "conserto/pomm-bundle",
   "type": "symfony-bundle",
   "description": "The Symfony bundle for Pomm",
@@ -17,19 +17,20 @@
     }
   ],
   "require": {
-    "php": ">=8.1",
+    "php": ">=8.4",
     "jdorn/sql-formatter": "~1.2",
-    "conserto/pomm-model-manager": "^3.0",
-    "conserto/pomm-cli": "^3.0",
-    "conserto/pomm-symfony-bridge": "^4.0",
-    "symfony/framework-bundle": "^6.0|^7.0",
+    "conserto/pomm-model-manager": "^4.0",
+    "conserto/pomm-cli": "^4.0",
+    "conserto/pomm-symfony-bridge": "^5.0",
+    "symfony/framework-bundle": "^7.0",
     "twig/twig": "~3.0",
-    "symfony/http-kernel": "^6.2|^7.0"
+    "symfony/http-kernel": "^7.0"
   },
   "require-dev": {
-    "symfony/console": "^6.0|^7.0",
+    "symfony/console": "^7.0",
     "squizlabs/php_codesniffer": "~3.7",
-    "phpstan/phpstan": "^1.8"
+    "phpstan/phpstan": "^2.0",
+    "rector/rector": "^2.0"
   },
   "suggest": {
       "symfony/web-profiler-bundle": "Display queries log"
@@ -38,6 +39,5 @@
     "psr-4": {
       "PommProject\\PommBundle\\": "sources/lib/"
     }
-  },
-  "minimum-stability": "stable"
+  }
 }

@@ -37,7 +37,7 @@ class ServiceModel extends Model
     {
         $this->logger = $logger;
         $this->structure = new ServiceStructure;
-        $this->flexibleEntityClass = "\AppBundle\Model\MyDb1\PublicSchema\Service";
+        $this->flexibleEntityClass = Service::class;
     }
 
     public function getSum()

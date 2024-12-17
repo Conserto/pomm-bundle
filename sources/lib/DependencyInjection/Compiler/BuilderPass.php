@@ -31,8 +31,8 @@ class BuilderPass implements CompilerPassInterface
 
                 $definition->addMethodCall('addBuilder', [$name, new Reference($pommConfig['session_builder'])]);
             } else {
-                $service = uniqid($pommConfig['class:session_builder'], true);
-                $cbDefinition = $container->register($service, ltrim($pommConfig['class:session_builder'], '\\'));
+                $service = uniqid((string) $pommConfig['class:session_builder'], true);
+                $cbDefinition = $container->register($service, ltrim((string) $pommConfig['class:session_builder'], '\\'));
                 $cbDefinition->setShared(false);
                 $cbDefinition->setArguments([$pommConfig]);
 
