@@ -1,10 +1,10 @@
 {
     "require": {
         "symfony/monolog-bundle": "^3.0",
-        "conserto/pomm-model-manager": "4.0.x-dev as 4.0",
-        "conserto/pomm-cli": "4.0.x-dev as 4.0",
-        "conserto/pomm-symfony-bridge": "5.0.x-dev as 5.0",
-        "conserto/pomm-foundation": "4.0.x-dev as 4.0",
+        "conserto/pomm-model-manager": "^4.0",
+        "conserto/pomm-cli": "^4.0",
+        "conserto/pomm-symfony-bridge": "^5.0",
+        "conserto/pomm-foundation": "^4.0",
         "symfony/framework-bundle": "^7.0",
         "jdorn/sql-formatter": "~1.2",
         "symfony/contracts": "^3.0",
