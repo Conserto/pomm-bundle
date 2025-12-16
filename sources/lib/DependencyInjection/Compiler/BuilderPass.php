@@ -2,7 +2,7 @@
 
 namespace PommProject\PommBundle\DependencyInjection\Compiler;
 
-use PommProject\ModelManager\Session;
+use PommProject\Foundation\Session\Session;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
