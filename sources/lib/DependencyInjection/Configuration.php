@@ -36,7 +36,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('pomm');
         $rootNode = $treeBuilder->getRootNode();
 
-        /** @phpstan-ignore-next-line */
         $rootNode
             ->children()
                 ->arrayNode('configuration')
