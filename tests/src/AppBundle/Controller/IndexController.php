@@ -2,14 +2,14 @@
 
 namespace AppBundle\Controller;
 
-use \AppBundle\Model\MyDb1\PublicSchema\Config;
+use AppBundle\Model\MyDb1\PublicSchema\Config;
 use AppBundle\Model\MyDb1\PublicSchema\ConfigModel;
-use \AppBundle\Model\MyDb1\PublicSchema\ServiceModel;
-use \PommProject\Foundation\Session\Session;
+use AppBundle\Model\MyDb1\PublicSchema\ServiceModel;
+use PommProject\ModelManager\Session;
 use PommProject\PommBundle\ValueResolver\Attribute\Entity;
-use \Symfony\Component\Serializer\Serializer;
-use \Symfony\Component\HttpFoundation\Response;
-use \Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface;
 use Twig\Environment;
 
 class IndexController

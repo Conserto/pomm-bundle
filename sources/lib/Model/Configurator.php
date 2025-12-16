@@ -12,7 +12,7 @@ namespace PommProject\PommBundle\Model;
 
 use PommProject\Foundation\Exception\FoundationException;
 use PommProject\Foundation\Pomm;
-use PommProject\Foundation\Session\Session;
+use PommProject\ModelManager\Session;
 
 /**
  * Configurator
