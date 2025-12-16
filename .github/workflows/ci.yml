@@ -11,6 +11,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        php-version: ['8.4', '8.5']
 
     services:
       postgres:
@@ -31,10 +34,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup PHP 8.4
+      - name: Setup PHP ${{ matrix.php-version }}
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.4'
+          php-version: ${{ matrix.php-version }}
 
       - name: Build
         run: |
@@ -59,7 +62,7 @@ jobs:
           configuration: phpstan.neon
           memory_limit: 256M
           path: ''
-          php_version: 8.4
+          php_version: ${{ matrix.php-version }}
 
       - name: PHPCS Analysis
         run: |
