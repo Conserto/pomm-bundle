@@ -1,5 +1,5 @@
 {
-  "version": "6.0.2",
+  "version": "6.0.3",
   "name": "conserto/pomm-bundle",
   "type": "symfony-bundle",
   "description": "The Symfony bundle for Pomm",
@@ -21,14 +21,14 @@
     "jdorn/sql-formatter": "~1.2",
     "conserto/pomm-model-manager": "^4.0",
     "conserto/pomm-cli": "^4.0",
-    "conserto/pomm-symfony-bridge": "^5.0",
-    "symfony/framework-bundle": "^7.0",
+    "conserto/pomm-symfony-bridge": "^5.0 | ^6.0",
+    "symfony/framework-bundle": "^7.0 | ^8.0",
     "twig/twig": "~3.0",
-    "symfony/http-kernel": "^7.0"
+    "symfony/http-kernel": "^7.0 | ^8.0"
   },
   "require-dev": {
-    "symfony/console": "^7.0",
-    "squizlabs/php_codesniffer": "~3.7",
+    "symfony/console": "^7.0 | ^8.0",
+    "squizlabs/php_codesniffer": "^4.0",
     "phpstan/phpstan": "^2.0",
     "rector/rector": "^2.0"
   },
