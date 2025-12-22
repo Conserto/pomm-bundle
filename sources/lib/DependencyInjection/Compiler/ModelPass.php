@@ -26,8 +26,12 @@ class ModelPass implements DI\Compiler\CompilerPassInterface
         $this->addTagged($container, 'pomm.model_layer', 'pomm.pooler.model_layer', 'getModelLayer');
     }
 
-    private function addTagged(DI\ContainerBuilder $container, string $tag, string $defaultServiceId, string $method): void
-    {
+    private function addTagged(
+        DI\ContainerBuilder $container,
+        string $tag,
+        string $defaultServiceId,
+        string $method
+    ): void {
         /** @var DI\Definition[] $definitions */
         $definitions = [];
 

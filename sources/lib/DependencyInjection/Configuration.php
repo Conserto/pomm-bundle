@@ -49,7 +49,11 @@ class Configuration implements ConfigurationInterface
                                 ->beforeNormalization()
                                     ->always()
                                     ->then(function ($v) {
-                                        @trigger_error('class:session_builder is deprecated since version 2.3 and will be removed in 3.0. Use session_builder config key instead with a service id.', E_USER_DEPRECATED);
+                                        @trigger_error(
+                                            'class:session_builder is deprecated since version 2.3 and will be removed'
+                                            . ' in 3.0. Use session_builder config key instead with a service id.',
+                                            E_USER_DEPRECATED
+                                        );
                                         return $v;
                                     })
                                 ->end()
@@ -59,11 +63,13 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->validate()
                             ->ifTrue(fn($v): bool => isset($v['session_builder']) && isset($v['class:session_builder']))
-                            ->thenInvalid('You cannot use both "session_builder" and "class:session_builder" at the same time.')
+                            ->thenInvalid(
+                                'You cannot use both "session_builder" and "class:session_builder" at the same time.'
+                            )
                         ->end()
                         ->beforeNormalization()
                             ->always()
-                            ->then(function ($v) {
+                            ->then(function (array $v): array {
                                 if (!isset($v['session_builder']) && !isset($v['class:session_builder'])) {
                                     $v['session_builder'] = 'pomm.model_manager.session_builder';
                                 }
